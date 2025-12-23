@@ -109,18 +109,47 @@ SYSTEM_prompt=(
     )
 
 
-#分别提取sentence和labels
+# #分别提取sentence和labels
+# def distinguish(data):
+#     data=data.map(lambda x:{
+#         'prompt':[
+#             {'role':'system','content':SYSTEM_prompt},
+#             {'role':'user','content':x["sentence"]},
+#             {'role':'assistant','content':json.dumps(x['labels'],ensure_ascii=False)}
+#         ]
+#     },
+#     remove_columns=data.column_names  # ← 关键！
+#     )
+#     return data
+
 def distinguish(data):
-    data=data.map(lambda x:{
-        'prompt':[
-            {'role':'system','content':SYSTEM_prompt},
-            {'role':'user','content':x["sentence"]},
-            {'role':'assistant','content':json.dumps(x['labels'],ensure_ascii=False)}
-        ]
-    },
-    remove_columns=data.column_names  # ← 关键！
+    def _format(x):
+        # 你的系统 prompt
+        system_part = SYSTEM_prompt
+        
+        # 用户输入（sentence）
+        user_part = x["sentence"]
+        
+        # 助手输出（labels 的 JSON 字符串）
+        assistant_part = json.dumps(x["labels"], ensure_ascii=False)
+        
+        # 拼接成字符串形式的 prompt 和 completion
+        prompt = (
+            f"{system_part}\n\n"
+            f"用户：{user_part}\n\n"
+            f"助手："
+        )
+        
+        return {
+            "prompt": prompt,
+            "completion": assistant_part
+        }
+
+    return data.map(
+        _format,
+        remove_columns=data.column_names  # 删除原字段
     )
-    return data
+
 
 def distinguish_eval(data):
     data=data.map(lambda x:{
