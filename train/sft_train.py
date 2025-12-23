@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from trl import SFTConfig, SFTTrainer
-from srctwo.data.utils import distinguish,train_data,valid_data
+from srcthree.data.utils import distinguish,train_data,valid_data
 from peft import LoraConfig, TaskType, get_peft_model
 
 # data=distinguish(train_data)[0]

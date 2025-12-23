@@ -1,7 +1,7 @@
 import argparse
 
-from srctwo.train.sft_train import train as sft_train
-from srctwo.infer.inference import infer
+from srcthree.train.sft_train import train as sft_train
+from srcthree.infer.inference import infer
 
 
 def main():
