@@ -19,7 +19,7 @@ def main():
         "--checkpoint_dir",
         type=str,
         required=False,
-        default=r"/content/checkpoints",
+        default="/content/drive/MyDrive/checkpoints",
         help="The output directory where the model predictions and checkpoints will be written when training."
              "And the output directory where the model will be loaded from when at inference",
     )
