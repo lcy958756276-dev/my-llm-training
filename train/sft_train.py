@@ -47,13 +47,13 @@ def train(args):
 
 
     model=AutoModelForCausalLM.from_pretrained(
-        pretrained_model_name_or_path="D:\\vscode--llm\\my-llm-training\\srctwo\\models\\Qwen2.5-7B",
+        pretrained_model_name_or_path="Qwen/Qwen2.5-7B",
         torch_dtype=torch.bf16,
         device_map=None,
         cache_dir=args.cache_dir
     ).to("cuda")
 
-    tokenizer=AutoTokenizer.from_pretrained(pretrained_model_name_or_path="D:\\vscode--llm\\my-llm-training\\srctwo\\models\\Qwen2.5-7B",cache_dir=args.cache_dir)
+    tokenizer=AutoTokenizer.from_pretrained(pretrained_model_name_or_path="Qwen/Qwen2.5-7B",cache_dir=args.cache_dir)
     tokenizer.pad_token = tokenizer.eos_token
 
     model=get_peft_model(model,config)
