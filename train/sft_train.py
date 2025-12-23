@@ -46,7 +46,7 @@ def train(args):
 
     model=AutoModelForCausalLM.from_pretrained(
         pretrained_model_name_or_path="Qwen/Qwen2.5-7B",
-        torch_dtype=torch.float16,
+        load_in_4bit=True,
         device_map=None,
         cache_dir=args.cache_dir
     ).to("cuda")
