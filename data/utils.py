@@ -84,9 +84,9 @@ class PeopleDaily(TorchDataset):
         return self.data[idx]
 
 
-train_data = PeopleDaily('/content/sample_data').to_hf()
+train_data = PeopleDaily('/content/stage3_data/llm_data/medical.train').to_hf()
 print(f"{num}")
-valid_data = PeopleDaily('D:\\vscode--llm\\stage3_data\\llm_data\\medical.dev').to_hf()
+valid_data = PeopleDaily('/content/stage3_data/llm_data/medical.dev').to_hf()
 # test_data = PeopleDaily('D:\\vscode--llm\\stage3_data\\llm_data\\medical.test').to_hf()
 
 # print(type(train_data[0]))---->dict
