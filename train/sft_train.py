@@ -13,7 +13,12 @@ eval_data=distinguish(valid_data)
 
 def train(args):
     training_args = SFTConfig(
-        output_dir=args.checkpoint_dir,#checkpoint-200 / checkpoint-400 / best_model不是完整模型,LoRA 更新后的可训练参数,在训练到 step 200 时保存的 LoRA adapter 权重,bestmodel就是eval_loss最低的checkpoint
+        output_dir=args.checkpoint_dir,          # 模型输出路径
+        overwrite_output_dir=True,               # 是否覆盖已有输出
+        do_train=True,
+        do_eval=True,                            # 开启评估
+        per_device_train_batch_size=args.per_device_train_batch_size,
+        gradient_accumulation_steps=args.gradient_accumulation_steps,
         learning_rate=args.learning_rate,
         adam_beta1=args.adam_beta1,
         adam_beta2=args.adam_beta2,
@@ -21,19 +26,14 @@ def train(args):
         warmup_ratio=args.warmup_ratio,
         lr_scheduler_type=args.lr_scheduler_type,
         logging_steps=args.logging_steps,
-        fp16=True,
-        per_device_train_batch_size=args.per_device_train_batch_size,
-        gradient_accumulation_steps=args.gradient_accumulation_steps,
-        max_seg_length=1024,
-        num_train_epochs=args.epochs,
-        save_steps=args.save_steps,
-        save_strategy=args.save_strategy,
         max_grad_norm=args.max_grad_norm,
-        log_on_each_node=False,
-        report_to="none",
-        load_best_model_at_end=True,
-        evaluation_strategy="steps",
-        eval_steps=100,
+        num_train_epochs=args.epochs,
+        fp16=True,                               # 半精度训练
+        save_steps=args.save_steps,
+        save_total_limit=3,                       # 最多保留 3 个 checkpoint
+        load_best_model_at_end=True,             # 使用 eval loss 最小的模型
+        eval_steps=100,                          # 每多少 step 评估一次
+        report_to="none",                        # 不用 wandb/logging
     )
 
     config=LoraConfig(
