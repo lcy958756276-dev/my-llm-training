@@ -63,6 +63,6 @@ def train(args):
         args=training_args,
         train_dataset=data_train,
         eval_dataset=eval_data,
-        dataset_test_field="prompt",
+        dataset_text_field="prompt",
     )
     trainer.train()
