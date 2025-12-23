@@ -31,9 +31,6 @@ def train(args):
         fp16=True,                               # 半精度训练
         save_steps=args.save_steps,
         save_total_limit=3,                       # 最多保留 3 个 checkpoint
-        load_best_model_at_end=False,             # 使用 eval loss 最小的模型
-        evaluation_strategy="no",      # 保持不评估
-        eval_steps=100,                          # 每多少 step 评估一次
         report_to="none",                        # 不用 wandb/logging
     )
 
